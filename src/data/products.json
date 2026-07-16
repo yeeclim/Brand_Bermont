@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "heavy-mesh-jersey-88",
+    "name": "Heavy Mesh Jersey 88",
+    "priceKRW": 128000,
+    "visualNum": "88",
+    "tag": "tag_new",
+    "specs": ["320 GSM", "HEAVY MESH", "OVERSIZED"]
+  },
+  {
+    "slug": "oversized-crewneck",
+    "name": "Oversized Crewneck",
+    "priceKRW": 98000,
+    "visualNum": "01",
+    "tag": null,
+    "specs": ["450 GSM", "COTTON 100%", "RIB 3.5CM"]
+  },
+  {
+    "slug": "glow-thread-cap",
+    "name": "Glow Thread Cap",
+    "priceKRW": 54000,
+    "visualNum": "GT",
+    "tag": "tag_glow",
+    "specs": ["GLOW THREAD", "NEON RIB"]
+  }
+]

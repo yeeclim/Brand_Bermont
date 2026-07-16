@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BERMONT — Fabric First</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0C;
+  --surface:#141416;
+  --line:#232326;
+  --accent:#C6F33A;
+  --accent-dim:rgba(198,243,58,.14);
+  --text:#EDEDE8;
+  --muted:#8A8A85;
+  --radius:14px;
+  --font-display:"Archivo",sans-serif;
+  --font-body:"Inter",sans-serif;
+  --font-mono:"IBM Plex Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-body);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+
+/* ---------- Header ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(11,11,12,.78);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{
+  font-family:var(--font-display);font-weight:900;font-stretch:110%;
+  font-size:20px;letter-spacing:.06em;
+}
+.logo b{color:var(--accent)}
+.nav-links{display:flex;gap:clamp(16px,3vw,36px);font-size:13.5px;font-weight:500;color:var(--muted)}
+.nav-links a{transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:14px}
+
+/* language switcher — styled like the woven hang tag */
+.lang{
+  display:flex;gap:2px;background:var(--surface);
+  border:1px solid var(--line);border-radius:8px;padding:3px;
+}
+.lang button{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;
+  background:none;border:0;color:var(--muted);
+  padding:5px 8px;border-radius:5px;cursor:pointer;transition:.15s;
+}
+.lang button:hover{color:var(--text)}
+.lang button.on{background:var(--accent);color:#0B0B0C;font-weight:500}
+.cart{
+  font-family:var(--font-mono);font-size:12px;color:var(--muted);
+  border:1px solid var(--line);border-radius:8px;padding:8px 12px;
+  background:none;cursor:pointer;transition:.2s;
+}
+.cart:hover{border-color:var(--accent);color:var(--accent)}
+.burger{display:none;background:none;border:0;color:var(--text);font-size:22px;cursor:pointer}
+
+/* ---------- Hero ---------- */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;padding-top:64px;overflow:hidden;
+}
+.hero-88{
+  position:absolute;right:-4vw;top:50%;transform:translateY(-54%);
+  font-family:var(--font-display);font-weight:900;font-stretch:62%;
+  font-size:clamp(300px,58vw,860px);line-height:.8;
+  color:transparent;-webkit-text-stroke:1.5px var(--line);
+  user-select:none;pointer-events:none;z-index:0;
+}
+.hero-88 span{
+  position:absolute;inset:0;
+  color:transparent;-webkit-text-stroke:1.5px var(--accent);
+  clip-path:inset(58% 0 0 0);
+  filter:drop-shadow(0 0 26px rgba(198,243,58,.35));
+}
+.hero-inner{position:relative;z-index:1;padding-bottom:clamp(48px,8vh,96px)}
+.hero-eyebrow{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;
+  color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:10px;
+}
+.hero-eyebrow::before{content:"";width:34px;height:1px;background:var(--accent)}
+h1{
+  font-family:var(--font-display);font-weight:900;font-stretch:112%;
+  font-size:clamp(52px,9.5vw,138px);line-height:.92;letter-spacing:-.015em;
+  text-transform:uppercase;
+}
+h1 .hollow{color:transparent;-webkit-text-stroke:2px var(--text)}
+.hero-sub{
+  margin-top:26px;max-width:520px;color:var(--muted);
+  font-size:clamp(15px,1.6vw,18px);
+}
+.hero-cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+.btn{
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;
+  padding:15px 30px;border-radius:10px;cursor:pointer;transition:.2s;
+  border:1px solid var(--line);background:none;color:var(--text);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.btn-solid{background:var(--accent);color:#0B0B0C;border-color:var(--accent);font-weight:500}
+.btn-solid:hover{box-shadow:0 0 32px rgba(198,243,58,.35);transform:translateY(-2px)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ---------- Ticker ---------- */
+.ticker{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  overflow:hidden;background:var(--surface);
+}
+.ticker-track{
+  display:flex;gap:0;width:max-content;
+  animation:scroll 30s linear infinite;
+}
+.ticker-item{
+  font-family:var(--font-mono);font-size:12.5px;letter-spacing:.1em;
+  color:var(--muted);padding:14px 0;white-space:nowrap;
+}
+.ticker-item b{color:var(--accent);font-weight:500}
+.ticker-item::after{content:"//";margin:0 28px;color:var(--line)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- Section base ---------- */
+section{padding:clamp(72px,11vh,130px) 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(36px,5vh,56px);flex-wrap:wrap}
+.sec-eyebrow{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;
+  color:var(--accent);margin-bottom:12px;
+}
+h2{
+  font-family:var(--font-display);font-weight:900;font-stretch:112%;
+  font-size:clamp(32px,4.6vw,58px);line-height:1;text-transform:uppercase;letter-spacing:-.01em;
+}
+.sec-link{font-family:var(--font-mono);font-size:13px;color:var(--muted);transition:.2s;white-space:nowrap}
+.sec-link:hover{color:var(--accent)}
+
+/* ---------- Drop grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;transition:.25s;position:relative;
+}
+.card:hover{transform:translateY(-5px);border-color:#3a3a3e}
+.card-visual{
+  aspect-ratio:4/4.6;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 110%, var(--accent-dim), transparent 60%),
+    linear-gradient(180deg,#121214,#0D0D0F);
+}
+.card-visual .num{
+  font-family:var(--font-display);font-weight:900;font-stretch:62%;
+  font-size:120px;color:transparent;-webkit-text-stroke:1.5px #2c2c30;transition:.3s;
+}
+.card:hover .num{-webkit-text-stroke-color:var(--accent);filter:drop-shadow(0 0 18px rgba(198,243,58,.4))}
+.tag{
+  position:absolute;top:14px;left:14px;
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;
+  background:var(--accent);color:#0B0B0C;padding:4px 9px;border-radius:5px;font-weight:500;
+}
+.card-body{padding:18px 18px 20px;border-top:1px solid var(--line)}
+.card-name{font-weight:600;font-size:15px}
+.card-specs{
+  display:flex;gap:7px;margin-top:11px;flex-wrap:wrap;
+}
+.chip{
+  font-family:var(--font-mono);font-size:10.5px;color:var(--muted);
+  border:1px solid var(--line);border-radius:5px;padding:3px 8px;
+}
+.card-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.price{font-family:var(--font-mono);font-size:14px;color:var(--text)}
+.card-foot a{font-family:var(--font-mono);font-size:12px;color:var(--accent)}
+
+/* ---------- Fabric Lab ---------- */
+.lab{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center}
+.lab-copy p{color:var(--muted);margin-top:18px;max-width:460px}
+.hangtag{
+  background:#101012;border:1px solid var(--line);border-radius:16px;
+  padding:30px;position:relative;max-width:440px;justify-self:end;width:100%;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+}
+.hangtag::before{
+  content:"";position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  width:34px;height:34px;border-radius:50%;
+  background:var(--bg);border:1px solid var(--line);
+}
+.hangtag::after{
+  content:"";position:absolute;top:-3px;left:50%;transform:translateX(-50%);
+  width:11px;height:11px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 14px rgba(198,243,58,.6);
+}
+.ht-head{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;color:var(--accent);
+  padding-bottom:16px;border-bottom:1px dashed var(--line);margin-top:14px;
+}
+.ht-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:13px 0;border-bottom:1px dashed var(--line);
+  font-family:var(--font-mono);font-size:13px;
+}
+.ht-row .k{color:var(--muted);font-size:11.5px;letter-spacing:.06em}
+.ht-row .v{color:var(--text)}
+.ht-row .v em{color:var(--accent);font-style:normal}
+.ht-bar{margin-top:18px}
+.ht-bar .k{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.06em;display:flex;justify-content:space-between}
+.meter{height:5px;background:var(--line);border-radius:99px;margin-top:8px;overflow:hidden}
+.meter i{display:block;height:100%;width:86%;background:var(--accent);border-radius:99px;box-shadow:0 0 12px rgba(198,243,58,.5)}
+
+/* ---------- Fit ---------- */
+.fit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px}
+.fit-card{
+  border:1px solid var(--line);border-radius:var(--radius);padding:28px;
+  background:linear-gradient(180deg,var(--surface),transparent);
+}
+.fit-card .mono{font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:.1em}
+.fit-card h3{font-family:var(--font-display);font-weight:800;font-size:20px;margin:14px 0 10px;text-transform:uppercase;letter-spacing:.01em}
+.fit-card p{color:var(--muted);font-size:14.5px}
+
+/* ---------- Newsletter ---------- */
+.news{text-align:center}
+.news h2{margin-bottom:16px}
+.news p{color:var(--muted);max-width:440px;margin:0 auto}
+.news-form{display:flex;gap:10px;max-width:460px;margin:32px auto 0}
+.news-form input{
+  flex:1;background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  padding:15px 18px;color:var(--text);font-family:var(--font-mono);font-size:13px;
+}
+.news-form input::placeholder{color:var(--muted)}
+.news-form input:focus{outline:none;border-color:var(--accent)}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);padding:44px 0;color:var(--muted);font-size:13px}
+.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+.foot .mono{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.08em}
+.foot-links{display:flex;gap:22px}
+.foot-links a:hover{color:var(--text)}
+
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .ticker-track{animation:none}
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- Responsive ---------- */
+@media(max-width:960px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .fit-grid{grid-template-columns:1fr}
+  .lab-grid{grid-template-columns:1fr}
+  .hangtag{justify-self:start}
+}
+@media(max-width:720px){
+  .nav-links{display:none}
+  .burger{display:block}
+  .grid{grid-template-columns:1fr}
+  .hero-88{right:-30vw}
+  .news-form{flex-direction:column}
+  .cart{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#">BERM<b>O</b>NT</a>
+    <nav class="nav-links">
+      <a href="#drop" data-i18n="nav_shop"></a>
+      <a href="#lab" data-i18n="nav_lab"></a>
+      <a href="#fit" data-i18n="nav_fit"></a>
+      <a href="#" data-i18n="nav_journal"></a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Language">
+        <button data-lang="ko">KO</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="ru">RU</button>
+        <button data-lang="es">ES</button>
+        <button data-lang="ja">JA</button>
+      </div>
+      <button class="cart" data-i18n="cart"></button>
+      <button class="burger" aria-label="Menu">≡</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-88" aria-hidden="true">88<span>88</span></div>
+  <div class="wrap hero-inner">
+    <div class="hero-eyebrow" data-i18n="hero_eyebrow"></div>
+    <h1>FABRIC<br><span class="hollow">FIRST</span></h1>
+    <p class="hero-sub" data-i18n="hero_sub"></p>
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="#drop"><span data-i18n="cta_shop"></span> →</a>
+      <a class="btn btn-ghost" href="#lab" data-i18n="cta_lab"></a>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- DROP -->
+<section id="drop">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-eyebrow">DROP 001 — SS26</div>
+        <h2 data-i18n="drop_title"></h2>
+      </div>
+      <a class="sec-link" href="#" data-i18n="view_all"></a>
+    </div>
+    <div class="grid">
+      <article class="card reveal">
+        <div class="card-visual"><span class="tag" data-i18n="tag_new"></span><span class="num">88</span></div>
+        <div class="card-body">
+          <div class="card-name">Heavy Mesh Jersey 88</div>
+          <div class="card-specs">
+            <span class="chip">320 GSM</span><span class="chip">HEAVY MESH</span><span class="chip">OVERSIZED</span>
+          </div>
+          <div class="card-foot"><span class="price">₩128,000</span><a href="#" data-i18n="card_cta"></a></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="card-visual"><span class="num">01</span></div>
+        <div class="card-body">
+          <div class="card-name">Oversized Crewneck</div>
+          <div class="card-specs">
+            <span class="chip">450 GSM</span><span class="chip">COTTON 100%</span><span class="chip">RIB 3.5CM</span>
+          </div>
+          <div class="card-foot"><span class="price">₩98,000</span><a href="#" data-i18n="card_cta"></a></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="card-visual"><span class="tag" style="background:#2c2c30;color:var(--accent)" data-i18n="tag_glow"></span><span class="num">GT</span></div>
+        <div class="card-body">
+          <div class="card-name">Glow Thread Cap</div>
+          <div class="card-specs">
+            <span class="chip">GLOW THREAD</span><span class="chip">NEON RIB</span>
+          </div>
+          <div class="card-foot"><span class="price">₩54,000</span><a href="#" data-i18n="card_cta"></a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FABRIC LAB -->
+<section class="lab" id="lab">
+  <div class="wrap lab-grid">
+    <div class="lab-copy reveal">
+      <div class="sec-eyebrow">FABRIC LAB</div>
+      <h2 data-i18n="lab_title"></h2>
+      <p data-i18n="lab_sub"></p>
+      <div class="hero-cta" style="margin-top:30px">
+        <a class="btn btn-ghost" href="#" data-i18n="lab_cta"></a>
+      </div>
+    </div>
+    <div class="hangtag reveal" role="figure" aria-label="Fabric spec sheet">
+      <div class="ht-head">BERMONT FABRIC SPEC — HM-320</div>
+      <div class="ht-row"><span class="k" data-i18n="sp_weight"></span><span class="v"><em>320</em> g/m²</span></div>
+      <div class="ht-row"><span class="k" data-i18n="sp_comp"></span><span class="v">POLY 88 / SPAN 12</span></div>
+      <div class="ht-row"><span class="k" data-i18n="sp_shrink"></span><span class="v">&lt; <em>1.5</em>%</span></div>
+      <div class="ht-row"><span class="k" data-i18n="sp_finish"></span><span class="v">GLOW THREAD RIB</span></div>
+      <div class="ht-bar">
+        <span class="k"><span data-i18n="sp_dur"></span><span>86/100</span></span>
+        <div class="meter"><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIT -->
+<section id="fit">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-eyebrow">FIT SYSTEM</div>
+        <h2 data-i18n="fit_title"></h2>
+      </div>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-card reveal">
+        <div class="mono">FIT / RELAXED</div>
+        <h3 data-i18n="fit1_h"></h3>
+        <p data-i18n="fit1_p"></p>
+      </div>
+      <div class="fit-card reveal">
+        <div class="mono">FIT / OVER</div>
+        <h3 data-i18n="fit2_h"></h3>
+        <p data-i18n="fit2_p"></p>
+      </div>
+      <div class="fit-card reveal">
+        <div class="mono">FIT / HEAVY</div>
+        <h3 data-i18n="fit3_h"></h3>
+        <p data-i18n="fit3_p"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="news">
+  <div class="wrap reveal">
+    <div class="sec-eyebrow">DROP ALERT</div>
+    <h2 data-i18n="news_title"></h2>
+    <p data-i18n="news_sub"></p>
+    <div class="news-form">
+      <input type="email" data-i18n-ph="news_ph" aria-label="Email">
+      <button class="btn btn-solid" data-i18n="news_cta"></button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span class="logo" style="font-size:16px">BERM<b>O</b>NT</span>
+    <nav class="foot-links">
+      <a href="#" data-i18n="f_terms"></a>
+      <a href="#" data-i18n="f_privacy"></a>
+      <a href="#" data-i18n="f_contact"></a>
+    </nav>
+    <span class="mono">© 2026 BERMONT — SEOUL / INCHEON</span>
+  </div>
+</footer>
+
+<script>
+/* ---------- i18n ---------- */
+const I18N = {
+  ko:{
+    nav_shop:"샵", nav_lab:"패브릭 랩", nav_fit:"핏", nav_journal:"저널", cart:"CART (0)",
+    hero_eyebrow:"PREMIUM FABRIC / OVERSIZED SYSTEM",
+    hero_sub:"320g 헤비 메쉬부터 글로우 스레드까지. 버몬트는 원단 스펙을 숨기지 않습니다 — 전부 공개하고, 숫자로 증명합니다.",
+    cta_shop:"DROP 001 보기", cta_lab:"원단 스펙 보기",
+    drop_title:"NEW DROP", view_all:"ALL PRODUCTS →", tag_new:"NEW", tag_glow:"GLOW", card_cta:"DETAIL →",
+    lab_title:"모든 원단은<br>측정된다",
+    lab_sub:"모든 제품에는 행택 스펙시트가 붙습니다. 평량, 혼용률, 수축률, 후가공 — 감으로 말하지 않고 데이터로 보여줍니다.",
+    lab_cta:"FABRIC LAB 전체 보기",
+    sp_weight:"WEIGHT", sp_comp:"COMPOSITION", sp_shrink:"SHRINKAGE", sp_finish:"FINISH", sp_dur:"DURABILITY",
+    fit_title:"핏 시스템",
+    fit1_h:"Relaxed", fit1_p:"몸을 따라가되 붙지 않는 기본 실루엣. 데일리 기준핏.",
+    fit2_h:"Over", fit2_p:"어깨를 떨어뜨린 오버 실루엣. 버몬트의 시그니처 핏.",
+    fit3_h:"Heavy", fit3_p:"450g 이상의 고평량 원단 전용 패턴. 무게가 만드는 드레이프.",
+    news_title:"DROP ALERT", news_sub:"신제품 드랍과 패브릭 랩 리포트를 가장 먼저 받아보세요.",
+    news_ph:"EMAIL", news_cta:"구독",
+    f_terms:"이용약관", f_privacy:"개인정보처리방침", f_contact:"문의",
+    ticker:["<b>320 GSM</b> HEAVY MESH","GLOW-IN-THE-DARK THREAD","OVERSIZED FIT SYSTEM","SHRINKAGE <b>&lt;1.5%</b>","FABRIC SPEC 전면 공개","DROP 001 — SS26"]
+  },
+  en:{
+    nav_shop:"Shop", nav_lab:"Fabric Lab", nav_fit:"Fit", nav_journal:"Journal", cart:"CART (0)",
+    hero_eyebrow:"PREMIUM FABRIC / OVERSIZED SYSTEM",
+    hero_sub:"From 320g heavy mesh to glow thread. BERMONT hides nothing — every fabric spec published, proven in numbers.",
+    cta_shop:"SHOP DROP 001", cta_lab:"SEE FABRIC SPECS",
+    drop_title:"NEW DROP", view_all:"ALL PRODUCTS →", tag_new:"NEW", tag_glow:"GLOW", card_cta:"DETAIL →",
+    lab_title:"EVERY FABRIC<br>IS MEASURED",
+    lab_sub:"Every piece ships with a hang-tag spec sheet. Weight, composition, shrinkage, finish — data, not adjectives.",
+    lab_cta:"ENTER FABRIC LAB",
+    sp_weight:"WEIGHT", sp_comp:"COMPOSITION", sp_shrink:"SHRINKAGE", sp_finish:"FINISH", sp_dur:"DURABILITY",
+    fit_title:"FIT SYSTEM",
+    fit1_h:"Relaxed", fit1_p:"Follows the body without clinging. The daily baseline.",
+    fit2_h:"Over", fit2_p:"Dropped shoulders, extended silhouette. The BERMONT signature.",
+    fit3_h:"Heavy", fit3_p:"Patterns built for 450g+ fabrics. Drape created by weight itself.",
+    news_title:"DROP ALERT", news_sub:"Be first to get new drops and Fabric Lab reports.",
+    news_ph:"EMAIL", news_cta:"SUBSCRIBE",
+    f_terms:"Terms", f_privacy:"Privacy", f_contact:"Contact",
+    ticker:["<b>320 GSM</b> HEAVY MESH","GLOW-IN-THE-DARK THREAD","OVERSIZED FIT SYSTEM","SHRINKAGE <b>&lt;1.5%</b>","FULL SPEC DISCLOSURE","DROP 001 — SS26"]
+  },
+  ru:{
+    nav_shop:"Магазин", nav_lab:"Fabric Lab", nav_fit:"Крой", nav_journal:"Журнал", cart:"CART (0)",
+    hero_eyebrow:"PREMIUM FABRIC / OVERSIZED SYSTEM",
+    hero_sub:"От тяжёлой сетки 320г до светящейся нити. BERMONT ничего не скрывает — все характеристики ткани опубликованы и доказаны цифрами.",
+    cta_shop:"DROP 001", cta_lab:"ХАРАКТЕРИСТИКИ ТКАНИ",
+    drop_title:"НОВЫЙ ДРОП", view_all:"ВСЕ ТОВАРЫ →", tag_new:"NEW", tag_glow:"GLOW", card_cta:"ПОДРОБНЕЕ →",
+    lab_title:"КАЖДАЯ ТКАНЬ<br>ИЗМЕРЕНА",
+    lab_sub:"К каждой вещи прилагается спецификация. Плотность, состав, усадка, отделка — данные, а не эпитеты.",
+    lab_cta:"ОТКРЫТЬ FABRIC LAB",
+    sp_weight:"ПЛОТНОСТЬ", sp_comp:"СОСТАВ", sp_shrink:"УСАДКА", sp_finish:"ОТДЕЛКА", sp_dur:"ПРОЧНОСТЬ",
+    fit_title:"СИСТЕМА КРОЯ",
+    fit1_h:"Relaxed", fit1_p:"Следует за телом, не облегая. Базовый повседневный крой.",
+    fit2_h:"Over", fit2_p:"Спущенные плечи, удлинённый силуэт. Фирменный крой BERMONT.",
+    fit3_h:"Heavy", fit3_p:"Лекала для тканей от 450г. Драпировка, созданная весом.",
+    news_title:"DROP ALERT", news_sub:"Узнавайте о новых дропах и отчётах Fabric Lab первыми.",
+    news_ph:"EMAIL", news_cta:"ПОДПИСАТЬСЯ",
+    f_terms:"Условия", f_privacy:"Конфиденциальность", f_contact:"Контакты",
+    ticker:["<b>320 GSM</b> HEAVY MESH","СВЕТЯЩАЯСЯ НИТЬ","OVERSIZED FIT SYSTEM","УСАДКА <b>&lt;1.5%</b>","ПОЛНАЯ СПЕЦИФИКАЦИЯ","DROP 001 — SS26"]
+  },
+  es:{
+    nav_shop:"Tienda", nav_lab:"Fabric Lab", nav_fit:"Fit", nav_journal:"Journal", cart:"CART (0)",
+    hero_eyebrow:"PREMIUM FABRIC / OVERSIZED SYSTEM",
+    hero_sub:"De la malla pesada de 320g al hilo fosforescente. BERMONT no oculta nada: cada especificación publicada, probada en números.",
+    cta_shop:"VER DROP 001", cta_lab:"VER ESPECIFICACIONES",
+    drop_title:"NUEVO DROP", view_all:"TODOS LOS PRODUCTOS →", tag_new:"NEW", tag_glow:"GLOW", card_cta:"DETALLE →",
+    lab_title:"CADA TEJIDO<br>SE MIDE",
+    lab_sub:"Cada prenda incluye su ficha técnica. Gramaje, composición, encogimiento, acabado — datos, no adjetivos.",
+    lab_cta:"ENTRAR AL FABRIC LAB",
+    sp_weight:"GRAMAJE", sp_comp:"COMPOSICIÓN", sp_shrink:"ENCOGIMIENTO", sp_finish:"ACABADO", sp_dur:"DURABILIDAD",
+    fit_title:"SISTEMA DE FIT",
+    fit1_h:"Relaxed", fit1_p:"Sigue el cuerpo sin ceñirse. La base diaria.",
+    fit2_h:"Over", fit2_p:"Hombros caídos, silueta extendida. La firma de BERMONT.",
+    fit3_h:"Heavy", fit3_p:"Patrones para tejidos de 450g+. Caída creada por el propio peso.",
+    news_title:"DROP ALERT", news_sub:"Sé el primero en recibir nuevos drops e informes del Fabric Lab.",
+    news_ph:"EMAIL", news_cta:"SUSCRIBIRSE",
+    f_terms:"Términos", f_privacy:"Privacidad", f_contact:"Contacto",
+    ticker:["<b>320 GSM</b> HEAVY MESH","HILO FOSFORESCENTE","OVERSIZED FIT SYSTEM","ENCOGIMIENTO <b>&lt;1.5%</b>","ESPECIFICACIÓN TOTAL","DROP 001 — SS26"]
+  },
+  ja:{
+    nav_shop:"ショップ", nav_lab:"ファブリックラボ", nav_fit:"フィット", nav_journal:"ジャーナル", cart:"CART (0)",
+    hero_eyebrow:"PREMIUM FABRIC / OVERSIZED SYSTEM",
+    hero_sub:"320gヘビーメッシュから蓄光糸まで。BERMONTは生地スペックを隠しません — すべて公開し、数値で証明します。",
+    cta_shop:"DROP 001を見る", cta_lab:"生地スペックを見る",
+    drop_title:"NEW DROP", view_all:"ALL PRODUCTS →", tag_new:"NEW", tag_glow:"GLOW", card_cta:"詳細 →",
+    lab_title:"すべての生地は<br>測定される",
+    lab_sub:"全製品にハングタグ仕様書が付属。目付、混率、収縮率、加工 — 形容詞ではなくデータで示します。",
+    lab_cta:"FABRIC LABを見る",
+    sp_weight:"目付", sp_comp:"混率", sp_shrink:"収縮率", sp_finish:"加工", sp_dur:"耐久性",
+    fit_title:"フィットシステム",
+    fit1_h:"Relaxed", fit1_p:"体に沿いながら密着しない基本シルエット。日常の基準。",
+    fit2_h:"Over", fit2_p:"落とした肩線と伸びたシルエット。BERMONTのシグネチャー。",
+    fit3_h:"Heavy", fit3_p:"450g以上の高目付生地専用パターン。重さが生むドレープ。",
+    news_title:"DROP ALERT", news_sub:"新作ドロップとFabric Labレポートを最速でお届け。",
+    news_ph:"EMAIL", news_cta:"登録",
+    f_terms:"利用規約", f_privacy:"プライバシー", f_contact:"お問い合わせ",
+    ticker:["<b>320 GSM</b> HEAVY MESH","蓄光スレッド","OVERSIZED FIT SYSTEM","収縮率 <b>&lt;1.5%</b>","スペック全公開","DROP 001 — SS26"]
+  }
+};
+
+function setLang(code){
+  const d = I18N[code] || I18N.en;
+  document.documentElement.lang = code;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k = el.getAttribute("data-i18n");
+    if(d[k] !== undefined) el.innerHTML = d[k];
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{
+    const k = el.getAttribute("data-i18n-ph");
+    if(d[k] !== undefined) el.placeholder = d[k];
+  });
+  // ticker (duplicated for seamless loop)
+  const t = document.getElementById("ticker");
+  const items = [...d.ticker, ...d.ticker, ...d.ticker, ...d.ticker]
+    .map(s=>`<span class="ticker-item">${s}</span>`).join("");
+  t.innerHTML = items;
+  document.querySelectorAll(".lang button").forEach(b=>
+    b.classList.toggle("on", b.dataset.lang===code));
+  try{ localStorage.setItem("bermont-lang", code); }catch(e){}
+}
+document.querySelectorAll(".lang button").forEach(b=>
+  b.addEventListener("click",()=>setLang(b.dataset.lang)));
+
+let initial = "ko";
+try{ initial = localStorage.getItem("bermont-lang") || initial; }catch(e){}
+setLang(initial);
+
+/* ---------- Scroll reveal ---------- */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
