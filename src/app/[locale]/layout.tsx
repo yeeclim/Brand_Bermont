@@ -21,7 +21,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale });
   return {
-    title: "BERMONT — FABRIC FIRST",
+    title: "Bermont",
     description: t("hero_sub"),
   };
 }
