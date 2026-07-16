@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 
 type Product = {
   slug: string;
@@ -44,9 +45,9 @@ export default async function ProductCard({ product }: { product: Product }) {
         </div>
         <div className="mt-3.5 flex items-center justify-between">
           <span className="font-mono text-sm text-text">₩{price}</span>
-          <a href="#" className="font-mono text-xs text-accent">
+          <Link href={`/apparel/${product.slug}`} className="font-mono text-xs text-accent">
             {t("card_cta")}
-          </a>
+          </Link>
         </div>
       </div>
     </article>

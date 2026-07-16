@@ -22,5 +22,21 @@
     "visualNum": "GT",
     "tag": "tag_glow",
     "specs": ["GLOW THREAD", "NEON RIB"]
+  },
+  {
+    "slug": "crest-hockey-jersey-88",
+    "name": "Crest Hockey Jersey 88",
+    "priceKRW": 50000,
+    "visualNum": "88",
+    "tag": "tag_new",
+    "specs": ["260 GSM", "MESH KNIT", "OVERSIZED"],
+    "fabricSpec": {
+      "code": "CH-260",
+      "weight": 260,
+      "composition": "POLY 100 / MESH KNIT",
+      "shrinkage": 2.0,
+      "finish": "SUBLIMATION PRINT",
+      "durability": 82
+    }
   }
 ]

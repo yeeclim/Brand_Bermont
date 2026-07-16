@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import Reveal from "./Reveal";
+import HangTagSpec from "./HangTagSpec";
 
 export default async function FabricLab() {
   const t = await getTranslations();
@@ -28,46 +29,15 @@ export default async function FabricLab() {
             </a>
           </div>
         </Reveal>
-        <Reveal
-          className="brand-hangtag relative w-full max-w-[440px] justify-self-start rounded-2xl border border-line bg-[#101012] p-7.5 shadow-[0_30px_80px_rgba(0,0,0,0.5)] md:justify-self-end"
-        >
-          <div
-            role="figure"
-            aria-label="Fabric spec sheet"
-          >
-            <div className="mt-3.5 border-b border-dashed border-line pb-4 font-mono text-[11px] tracking-[0.12em] text-accent">
-              BERMONT FABRIC SPEC — HM-320
-            </div>
-            <div className="flex items-baseline justify-between border-b border-dashed border-line py-3.5 font-mono text-[13px]">
-              <span className="text-[11.5px] tracking-[0.06em] text-muted">{t("sp_weight")}</span>
-              <span className="text-text">
-                <em className="not-italic text-accent">320</em> g/m²
-              </span>
-            </div>
-            <div className="flex items-baseline justify-between border-b border-dashed border-line py-3.5 font-mono text-[13px]">
-              <span className="text-[11.5px] tracking-[0.06em] text-muted">{t("sp_comp")}</span>
-              <span className="text-text">POLY 88 / SPAN 12</span>
-            </div>
-            <div className="flex items-baseline justify-between border-b border-dashed border-line py-3.5 font-mono text-[13px]">
-              <span className="text-[11.5px] tracking-[0.06em] text-muted">{t("sp_shrink")}</span>
-              <span className="text-text">
-                &lt; <em className="not-italic text-accent">1.5</em>%
-              </span>
-            </div>
-            <div className="flex items-baseline justify-between border-b border-dashed border-line py-3.5 font-mono text-[13px]">
-              <span className="text-[11.5px] tracking-[0.06em] text-muted">{t("sp_finish")}</span>
-              <span className="text-text">GLOW THREAD RIB</span>
-            </div>
-            <div className="mt-4.5">
-              <span className="flex justify-between font-mono text-[11px] tracking-[0.06em] text-muted">
-                <span>{t("sp_dur")}</span>
-                <span>86/100</span>
-              </span>
-              <div className="brand-meter mt-2 h-[5px] overflow-hidden rounded-full bg-line">
-                <i style={{ width: "86%" }} />
-              </div>
-            </div>
-          </div>
+        <Reveal className="w-full max-w-[440px] justify-self-start md:justify-self-end">
+          <HangTagSpec
+            code="HM-320"
+            weight={320}
+            composition="POLY 88 / SPAN 12"
+            shrinkage={1.5}
+            finish="GLOW THREAD RIB"
+            durability={86}
+          />
         </Reveal>
       </div>
     </section>
