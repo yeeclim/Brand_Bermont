@@ -20,9 +20,25 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale });
+  const title = "Bermont";
+  const description = t("hero_sub");
+
   return {
-    title: "Bermont",
-    description: t("hero_sub"),
+    metadataBase: new URL("https://bermont.vercel.app"),
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      siteName: "BERMONT",
+      locale,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 
